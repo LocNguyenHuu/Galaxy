@@ -1,0 +1,13 @@
+.Main-Navbar {
+  height: 60px;
+  background: #336BFF;
+}
+
+.Main-Navbar.site-name {
+  text-align: center;
+}
+
+.MainSidebar {
+  height: 900px;
+  background: #336BFF;
+}

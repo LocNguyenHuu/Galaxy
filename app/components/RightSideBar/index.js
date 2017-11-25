@@ -1,6 +1,6 @@
 import React from 'react';
 
-class LeftSideBar extends React.Component {
+class RightSideBar extends React.Component {
   render() {
     return(
       <div>

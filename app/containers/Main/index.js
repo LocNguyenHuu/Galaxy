@@ -1,62 +1,108 @@
-import React, { Component } from 'react'
-import {BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom'
-import { Sidebar, Segment, Button, Menu, Image, Icon, Header } from 'semantic-ui-react'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch
+} from 'react-router-dom'
 
-import Home from 'containers/Home'
-import CarManagement from 'containers/CarManagement'
-import CarInformation from 'containers/CarInformation'
-import UserManagement from 'containers/UserManagement'
+import Sidebar from 'components/Sidebar';
 
-import "./Main.css"
+import Home from 'containers/Home';
+import CarManagement from 'containers/CarManagement';
 
-class Main extends Component {
-  state = { visible: false }
+import MaterialTitlePanel from './material_title_panel';
+import SidebarContent from './sidebar_content';
 
-  toggleVisibility = () => this.setState({ visible: !this.state.visible })
+const styles = {
+  contentHeaderMenuLink: {
+    textDecoration: 'none',
+    color: 'white',
+    padding: 8,
+    width: '400px'
+  },
+  content: {
+    padding: '16px',
+    width: '400px'
+  },
+};
+
+const mql = window.matchMedia(`(min-width: 800px)`);
+
+class Main extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      mql: mql,
+      docked: false,
+      open: false,
+    };
+
+    this.mediaQueryChanged = this.mediaQueryChanged.bind(this);
+    this.toggleOpen = this.toggleOpen.bind(this);
+    this.onSetOpen = this.onSetOpen.bind(this);
+  }
+
+  componentWillMount() {
+    mql.addListener(this.mediaQueryChanged);
+    this.setState({mql: mql, docked: mql.matches});
+  }
+
+  componentWillUnmount() {
+    this.state.mql.removeListener(this.mediaQueryChanged);
+  }
+
+  onSetOpen(open) {
+    this.setState({open: open});
+  }
+
+  mediaQueryChanged() {
+    this.setState({
+      mql: mql,
+      docked: this.state.mql.matches,
+    });
+  }
+
+  toggleOpen(ev) {
+    this.setState({open: !this.state.open});
+
+    if (ev) {
+      ev.preventDefault();
+    }
+  }
 
   render() {
-    const { visible } = this.state
+    const sidebar = <SidebarContent />;
+
+    const contentHeader = (
+      <span>
+        {!this.state.docked &&
+         <a onClick={this.toggleOpen.bind(this)} href="#" style={styles.contentHeaderMenuLink}>=</a>}
+        <span> Car Management System </span>
+      </span>);
+
+    const sidebarProps = {
+      sidebar: sidebar,
+      docked: this.state.docked,
+      open: this.state.open,
+      onSetOpen: this.onSetOpen,
+    };
+
     return (
-      <Router history={history}>
-      <div>
-        <div>
-          <div className="Main-Navbar">
-            <h2 className="Main-Navbar site-name">I am NavBar</h2>
+      <Sidebar {...sidebarProps}>
+        <MaterialTitlePanel title={contentHeader}>
+          <div style={styles.content}>
+          <Switch>
+            <Route exact path='/' component={Home}/>
+            <Route path='/carmanagement' component={CarManagement}/>
+          </Switch>
           </div>
-          <div>
-            <Button onClick={this.toggleVisibility} className="ui button"><i className="align justify icon"></i></Button>
-          </div>
-          <div className="MainSidebar">
-            <Sidebar.Pushable as={Segment}>
-              <Sidebar as={Menu} animation='slide out' width='thin' visible={visible} icon='labeled' vertical inverted>
-                <Menu.Item name='home' as={Link} to='/'>
-                  <Icon name='home' />
-                  Home
-                </Menu.Item>
-                <Menu.Item name='gamepad' as={Link} to='/carmanagement'>
-                  <Icon name='gamepad' />
-                  CarManagement
-                </Menu.Item>
-                <Menu.Item name='camera' as={Link} to='/carinformation'>
-                  <Icon name='camera' />
-                  Car Information
-                </Menu.Item>
-              </Sidebar>
-              <Sidebar.Pusher>
-                  <Switch>
-                    <Route exact path="/" component={Home}/>
-                    <Route exact path="/carmanagement" component={CarManagement}/>
-                    <Route exact path="/carinformation" component={CarInformation}/>
-                    <Route exact path="/usermanagement" component={UserManagement}/>
-                  </Switch>
-              </Sidebar.Pusher>
-            </Sidebar.Pushable>
-          </div>
-        </div>
-      </div>
-      </Router>
-    )
+        </MaterialTitlePanel>
+      </Sidebar>
+    );
   }
 }
 
-export default Main 
+export default Main

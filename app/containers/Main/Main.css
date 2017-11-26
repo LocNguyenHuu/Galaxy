@@ -7,7 +7,14 @@
   text-align: center;
 }
 
-.MainSidebar {
-  height: 900px;
-  background: #336BFF;
+.Main-header.page-name {
+  text-align: center;
+}
+
+.MainSidebar.car-management {
+  height: 240px;
+}
+
+.MainSidebar.user-management {
+  height: 240px;
 }

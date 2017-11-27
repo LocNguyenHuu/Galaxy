@@ -33,7 +33,19 @@ const styles = {
     backgroundColor: 'white',
   },
   carmanagementOption: {
-    display: 'inline',
+    width: '50%',
+    textAlign: 'center',
+    display: 'inline-flex',
+    backgroundColor: 'rgb(3, 169, 244)',
+    marign: '0 auto'
+  },
+  leftOption: {
+    marginRight: 10
+  },
+  Icon: {
+    display: 'block'
+  },
+  Name: {
   }
 };
 
@@ -48,17 +60,21 @@ const SidebarContent = (props) => {
   }
 
   return (
-    <MaterialTitlePanel title="Menu" style={style}>
+    <MaterialTitlePanel title='Menu' style={style}>
       <div style={styles.content}>
         <div>
           <Icon name='car' size='big' />
           <span>Car Management</span>
         </div>
         <div style={styles.carmanagementOption}>
-          <Icon name='plus circle' size='huge' />
-          <Link to="/">Register</Link>
-          <Icon name='car' size='huge' />
-          <Link to="/carmanagement">CarManagement</Link>
+          <span style={styles.leftOption}>
+            <Icon name='plus circle' size='huge' style={styles.Icon}/>
+            <Link to="/" style={styles.Name}>Register</Link>
+          </span>
+          <span>
+            <Icon name='car' size='huge' style={styles.Icon}/>
+            <Link to='/carmanagement' style={styles.Name}>CarManagement</Link>
+          </span>
         </div>
         <div style={styles.divider} />
         {links}

@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
 
 class UserManagement extends Component {
-
   render() {
-    return (
+    return(
       <div>
-        <h2>I am UserManagement</h2>
+        <h1>I am user management</h1>
       </div>
     )
   }
 }
 
-export default UserManagement
+export default UserManagement 

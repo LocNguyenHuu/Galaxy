@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
 import {
   BrowserRouter as Router,
   Route,
@@ -7,13 +7,17 @@ import {
   Switch
 } from 'react-router-dom'
 
-import Sidebar from 'components/Sidebar';
+import Sidebar from 'components/Sidebar'
 
-import Home from 'containers/Home';
-import CarManagement from 'containers/CarManagement';
+import RegisterCarForm from 'containers/RegisterCar'
+import CarManagement from 'containers/CarManagement'
+import Home from 'containers/Home'
+import UserManagement from 'containers/UserManagement'
+import ConnectedServices from 'containers/ConnectedServices'
+import ApplicationStore from 'containers/ApplicationStore'
 
-import MaterialTitlePanel from './material_title_panel';
-import SidebarContent from './sidebar_content';
+import MaterialTitlePanel from './CustomSidebar/material_title_panel'
+import SidebarContent from './CustomSidebar/sidebar_content'
 
 const styles = {
   contentHeaderMenuLink: {
@@ -96,7 +100,12 @@ class Main extends React.Component {
           <div style={styles.content}>
           <Switch>
             <Route exact path='/' component={Home}/>
-            <Route path='/carmanagement' component={CarManagement}/>
+            <Route exact path='/registerCar' component={RegisterCarForm}/>
+            <Route path='/carManagement' component={CarManagement} />
+            <Route path='/userManagement' component={UserManagement} />
+            <Route path='/firmwareUpdate' component={ConnectedServices} />
+            <Route path='/remoteTroubleshoot' component={ConnectedServices} />
+            <Route path='/applicationStore' component={ApplicationStore} />
           </Switch>
           </div>
         </MaterialTitlePanel>
